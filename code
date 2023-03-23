@@ -1,0 +1,70 @@
+# pip install python-jenkins
+# import jenkins
+# import webbrowser  
+
+ip = input("Enter the value of ip")
+user= input("Enter the name of user")
+
+print("JENKINS AUTOMATION")
+
+k = input('''Kindly select the service you want to use
+            1) Jenkins Username
+            2) Checking Jenkins Version
+            3) Checking total number of jobs on jenkins
+            4) Create an empty job
+            5) Deleting a job
+            6) Check views
+            7) Create view
+            8) Delete View
+            9) Visit Jenkins Dashboard
+            
+            ''') 
+
+    
+if k=="1":
+    user = server.get_whoami()
+    print(f"The current user is {user['fullName']}")
+elif k=="2":
+    version = server.get_version()
+    print(f"Jenkins is working on {version} version")
+    
+elif k=="3":
+     print(f"Total number of jobs ==> {server.jobs_count()}")
+elif k=="4":
+    for i in jobs:
+        g = (i['name']) 
+        print(f"These is current job on jenkins --> {g}")
+    print("Have a different name than these")
+    l=input("Enter the name of job")
+    server.create_job(l, jenkins.EMPTY_CONFIG_XML)
+    jobs = server.get_jobs()
+    print(f"{jobs[-1]['name']}\nJob url: {jobs[-1]['url']}")
+    print(f"Empty job created kindly check url ")
+    webbrowser.open(ip)
+elif k=="5":
+    for i in jobs:
+        g = (i['name']) 
+        print(f"These is current job on jenkins --> {g}")
+    t = input("Enter the job you want to delete")
+    server.delete_job(t)
+elif k=="6":
+    for i in server.get_views():
+        g = i['name']
+        print(f"The current views is --> {g}")
+elif k=="7":
+    o = input("Enter the name of view")
+    server.create_view(o, jenkins.EMPTY_VIEW_CONFIG_XML)
+    webbrowser.open(ip)
+elif k=="8":
+    for i in server.get_views():
+        g = i['name']
+        print(f"The current views is --> {g}")
+    p = input('Enter the view you want to delete')
+    server.delete_view(p)
+    print("View deleted kindly check Jenkins dashboard")
+    webbrowser.open(ip)
+elif k=="9":
+    webbrowser.open(ip)
+    
+else:
+    print("No such service availaible")
